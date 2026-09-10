@@ -1,0 +1,195 @@
+# Configuración del Agente Rastreador de Empleos en Costa Rica
+# Ajustado para Luis Diego Agüero Quirós
+# - Idiomas: EXCLUSIVAMENTE Español o Inglés.
+# - Puestos cubiertos:
+#   1. Soporte TI, Redes y Tickets (Junior, Mid y Senior)
+#   2. Análisis de Datos (Junior / Entry Level)
+#   3. Digitador, Data Entry y Back Office Administrativo (Excel, SAP, Inventario, Logística)
+
+agent:
+  scan_interval_minutes: 15
+  max_alerts_per_cycle: 10
+  country: "Costa Rica"
+
+# Idiomas descartados (solo español e inglés son válidos)
+excluded_languages:
+  - "french"
+  - "frances"
+  - "francés"
+  - "francais"
+  - "portuguese"
+  - "portugues"
+  - "portugués"
+  - "german"
+  - "aleman"
+  - "alemán"
+  - "deutsch"
+  - "italian"
+  - "italiano"
+  - "mandarin"
+  - "mandarín"
+  - "chinese"
+  - "chino"
+  - "dutch"
+  - "holandes"
+  - "holandés"
+  - "nederlands"
+  - "japanese"
+  - "japones"
+  - "japonés"
+  - "russian"
+  - "ruso"
+  - "korean"
+  - "coreano"
+
+# Perfiles de interés acordes a tu CV
+profiles:
+  data_analytics:
+    name: "Análisis de Datos Junior"
+    keywords:
+      - "data analyst"
+      - "analista de datos"
+      - "analista de datos junior"
+      - "junior data analyst"
+      - "power bi"
+      - "analista bi"
+      - "business intelligence junior"
+      - "sql junior"
+      - "junior data"
+      - "data reporting"
+      - "reporting analyst"
+      - "analista reporting"
+    exclusions:
+      - "senior"
+      - "sr."
+      - "sr "
+      - "lead"
+      - "principal"
+      - "director"
+      - "gerente"
+
+  it_support:
+    name: "Soporte TI y Tickets (Onsite / Backoffice)"
+    keywords:
+      - "soporte tecnico"
+      - "soporte tcnico"
+      - "it support"
+      - "desktop support"
+      - "help desk"
+      - "service desk"
+      - "soporte ti"
+      - "tecnico de soporte"
+      - "tcnico de soporte"
+      - "tecnico en redes"
+      - "tcnico en redes"
+      - "active directory"
+      - "jira"
+      - "tickets"
+      - "mesa de ayuda"
+      - "soporte en sitio"
+      - "it technician"
+      - "noc technician"
+      - "noc operator"
+      - "soporte informatico"
+      - "soporte informtico"
+      - "network technician"
+      - "infrastructure support"
+
+  backoffice_digitacion:
+    name: "Digitador & Back Office (Excel / SAP / Operaciones)"
+    keywords:
+      - "digitador"
+      - "digitadora"
+      - "data entry"
+      - "data entry clerk"
+      - "data entry specialist"
+      - "transcriptor"
+      - "transcriptora"
+      - "auxiliar de digitacion"
+      - "auxiliar de digitacin"
+      - "digitacion de datos"
+      - "digitacion"
+      - "ingreso de datos"
+      - "captura de datos"
+      - "back office"
+      - "backoffice"
+      - "asistente de datos"
+      - "inventario"
+      - "inventarios"
+      - "control de inventario"
+      - "control de inventarios"
+      - "auxiliar de compras"
+      - "asistente de compras"
+      - "auxiliar de logistica"
+      - "auxiliar aduanal"
+      - "clasificador de aduanas"
+      - "asistente administrativo"
+      - "auxiliar administrativo"
+      - "facturacion"
+      - "facturador"
+      - "facturadora"
+
+# Palabras que descartan la oferta globalmente (No Call Center de llamadas)
+exclusions:
+  - "call center"
+  - "agente de llamadas"
+  - "inbound calls"
+  - "outbound calls"
+  - "ventas telefonicas"
+  - "ventas telefnicas"
+  - "telemercadeo"
+  - "telemarketing"
+  - "cold calling"
+  - "agente bilingue llamadas"
+  - "cobro telefonico"
+
+# Plataformas de empleo activas en Costa Rica
+sources:
+  linkedin:
+    enabled: true
+    time_filter: "r86400"
+    queries:
+      - "Junior Data Analyst"
+      - "Data Analyst"
+      - "IT Support"
+      - "Desktop Support"
+      - "Help Desk"
+      - "Soporte Tecnico"
+      - "Service Desk"
+      - "Data Entry"
+      - "Digitador"
+      - "Back Office"
+
+  computrabajo:
+    enabled: true
+    slugs:
+      - "analista-de-datos"
+      - "soporte-tecnico"
+      - "help-desk"
+      - "power-bi"
+      - "junior"
+      - "digitador"
+      - "data-entry"
+      - "back-office"
+
+  talent:
+    enabled: true
+    queries:
+      - "soporte tecnico"
+      - "data analyst"
+      - "analista de datos"
+      - "help desk"
+      - "power bi"
+      - "digitador"
+      - "data entry"
+      - "back office"
+
+  elempleo:
+    enabled: true
+    queries:
+      - "soporte tecnico"
+      - "analista datos"
+      - "help desk"
+      - "it support"
+      - "digitador"
+      - "data entry"

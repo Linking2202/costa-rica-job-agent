@@ -1,0 +1,43 @@
+﻿name: "Costa Rica Job Monitor 24/7"
+
+on:
+  schedule:
+    # Se ejecuta automáticamente cada 30 minutos, las 24 horas del día
+    - cron: "*/30 * * * *"
+  workflow_dispatch: # Permite ejecutarlo manualmente con 1 clic desde GitHub
+
+permissions:
+  contents: write
+
+jobs:
+  scan-and-notify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar dependencias
+        run: |
+          pip install -r requirements.txt
+
+      - name: Ejecutar escaneo de empleos en Costa Rica
+        env:
+          ALERT_CHANNEL: "telegram"
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          python agent.py --run-once
+
+      - name: Guardar historial en la base de datos
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add jobs.db || true
+          git commit -m "Actualizar historial de vacantes detectadas [skip ci]" || echo "Sin cambios nuevos"
+          git push || echo "Nada que actualizar"
