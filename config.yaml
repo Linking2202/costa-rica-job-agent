@@ -193,3 +193,20 @@ sources:
       - "it support"
       - "digitador"
       - "data entry"
+
+  unmejorempleo:
+    enabled: true
+    queries:
+      - "soporte"
+      - "datos"
+      - "digitador"
+      - "inventario"
+      - "back office"
+
+  getonbrd:
+    enabled: true
+    queries:
+      - "support"
+      - "data"
+      - "soporte"
+      - "datos"
