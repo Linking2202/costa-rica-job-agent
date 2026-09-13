@@ -1,4 +1,4 @@
-﻿import time
+import time
 import logging
 import requests
 from bs4 import BeautifulSoup
@@ -26,13 +26,9 @@ class ComputrabajoScraper(BaseScraper):
         found_jobs = []
 
         for slug in self.slugs:
-            url = f"{self.BASE_URL}/trabajo-de-{slug}?pubdate=1" # ofertas recientes
+            url = f"{self.BASE_URL}/trabajo-de-{slug}"
             try:
                 resp = requests.get(url, headers=self.get_headers(), timeout=12)
-                if resp.status_code == 404:
-                    # Si pubdate=1 no encuentra, probar sin parámetro
-                    resp = requests.get(f"{self.BASE_URL}/trabajo-de-{slug}", headers=self.get_headers(), timeout=12)
-
                 if resp.status_code != 200:
                     logger.warning(f"[Computrabajo] Status {resp.status_code} al consultar slug '{slug}'")
                     continue

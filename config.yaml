@@ -147,7 +147,7 @@ exclusions:
 sources:
   linkedin:
     enabled: true
-    time_filter: "r86400"
+    time_filter: "r604800"        # r604800 = últimos 7 días (para no perder ofertas de fin de semana)
     queries:
       - "Junior Data Analyst"
       - "Data Analyst"
@@ -163,9 +163,11 @@ sources:
   computrabajo:
     enabled: true
     slugs:
-      - "analista-de-datos"
       - "soporte-tecnico"
+      - "informatica"
+      - "sistemas"
       - "help-desk"
+      - "analista-de-datos"
       - "power-bi"
       - "junior"
       - "digitador"
