@@ -1,9 +1,10 @@
-﻿from scrapers.linkedin import LinkedInScraper
+from scrapers.linkedin import LinkedInScraper
 from scrapers.computrabajo import ComputrabajoScraper
 from scrapers.talent import TalentScraper
 from scrapers.elempleo import ElEmpleoScraper
 from scrapers.unmejorempleo import UnMejorEmpleoScraper
 from scrapers.getonbrd import GetOnBrdScraper
+from scrapers.companies import CompaniesScraper
 
 def get_active_scrapers(config: dict):
     scrapers = []
@@ -26,5 +27,8 @@ def get_active_scrapers(config: dict):
 
     if sources_cfg.get("getonbrd", {}).get("enabled", True):
         scrapers.append(GetOnBrdScraper(config))
+
+    if sources_cfg.get("companies", {}).get("enabled", True):
+        scrapers.append(CompaniesScraper(config))
 
     return scrapers

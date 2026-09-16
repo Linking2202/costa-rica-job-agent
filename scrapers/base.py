@@ -43,10 +43,10 @@ class BaseScraper(ABC):
         """
         Evalúa si la oferta coincide con el perfil de Luis Diego:
         - Idiomas permitidos: ÚNICAMENTE Español e Inglés.
-        - Perfil 1: Soporte TI / Tickets (Permite Senior / Mid / Junior).
-        - Perfil 2: Análisis de Datos / Bases de Datos (Solo Junior / Entry).
-        - Perfil 3: Digitador, Data Entry & Back Office Administrativo (Excel, SAP, Inventario, Logística).
-        - Exclusión global: Descarta puestos de Call Center telefónico.
+        - Perfil 1: Soporte TI / Tickets (Bilingüe ES/EN, Soporte Técnico, Technical Support, Tier 1, L1, Service Desk).
+        - Perfil 2: Análisis de Datos / Bases de Datos (Solo Junior / Entry Level).
+        - Perfil 3: Digitador, Data Entry, Data Management & Back Office Administrativo.
+        - Exclusión global: Descarta puestos de Call Center telefónico / ventas salientes.
         """
         raw_text = f"{title} {description}"
         norm_text = strip_accents(raw_text)
@@ -54,7 +54,7 @@ class BaseScraper(ABC):
         # 1. Filtro estricto de idiomas (Solo Español / Inglés)
         excluded_languages = self.config.get("excluded_languages", [
             "french", "frances", "francais",
-            "portuguese", "portugues", "portugues",
+            "portuguese", "portugues",
             "german", "aleman", "deutsch",
             "italian", "italiano",
             "mandarin", "chinese", "chino",
@@ -68,7 +68,7 @@ class BaseScraper(ABC):
             if re.search(rf"\b{re.escape(norm_lang)}\b", norm_text):
                 return None
 
-        # 2. Filtro de exclusión global (no llamadas telefónicas / call center)
+        # 2. Filtro de exclusión global (no llamadas telefónicas / telemarketing / televentas)
         global_exclusions = self.config.get("exclusions", [])
         for excl in global_exclusions:
             norm_excl = strip_accents(excl)
@@ -86,12 +86,12 @@ class BaseScraper(ABC):
             pattern = rf"\b{re.escape(norm_kw)}\b"
             if re.search(pattern, norm_text):
                 has_senior = any(re.search(rf"\b{re.escape(strip_accents(ex))}\b", norm_text) for ex in data_exclusions)
-                is_junior = bool(re.search(r"\b(junior|jr\.?|trainee|entry|pasante)\b", norm_text))
+                is_junior = bool(re.search(r"\b(junior|jr\.?|trainee|entry|pasante|intern)\b", norm_text))
                 if has_senior and not is_junior:
                     return None
                 return "📊 Análisis de Datos (Junior / Entry)"
 
-        # 4. Perfil Soporte TI / Tickets (Aquí SÍ se permiten vacantes Senior)
+        # 4. Perfil Soporte TI / Tickets (Soporta español e inglés: technical support, help desk, service desk, tier 1, l1)
         it_cfg = self.config.get("profiles", {}).get("it_support", {})
         it_keywords = it_cfg.get("keywords", [])
         for kw in it_keywords:
@@ -102,22 +102,21 @@ class BaseScraper(ABC):
                 badge = " (Senior)" if is_senior else ""
                 return f"💻 Soporte TI & Tickets{badge} (Onsite / Backoffice)"
 
-        # 5. Regla flexible de combinaciones de soporte técnico y redes (permite Senior)
-        has_soporte = bool(re.search(r"\bsoporte\b", norm_text))
-        has_tech = bool(re.search(r"\b(tecnico|ti|it|computo|informatica|usuario|help\s*desk|service\s*desk)\b", norm_text))
-        if has_soporte and has_tech:
+        # 5. Regla flexible de combinaciones de soporte técnico (Soporta español: soporte + tech, e inglés: support + tech)
+        has_support_word = bool(re.search(r"\b(soporte|support)\b", norm_text))
+        has_tech_word = bool(re.search(r"\b(tecnico|technical|ti|it|computo|computacion|informatica|informatico|usuario|user|help\s*desk|service\s*desk|desktop|tier\s*1|l1|level\s*1|ticket|ticketing|incident|noc|network|redes)\b", norm_text))
+        if has_support_word and has_tech_word:
             is_senior = bool(re.search(r"\b(senior|sr\.?|sr\b)", norm_text))
             badge = " (Senior)" if is_senior else ""
             return f"💻 Soporte TI & Tickets{badge} (Onsite / Backoffice)"
 
-        # 6. Perfil Digitador / Data Entry / Back Office Administrativo
+        # 6. Perfil Digitador / Data Entry / Data Management / Back Office Administrativo
         bo_cfg = self.config.get("profiles", {}).get("backoffice_digitacion", {})
         bo_keywords = bo_cfg.get("keywords", [])
         for kw in bo_keywords:
             norm_kw = strip_accents(kw)
             pattern = rf"\b{re.escape(norm_kw)}\b"
             if re.search(pattern, norm_text):
-                # Si es cargo de gerencia o jefe, ignorar
                 if re.search(r"\b(jefe|jefatura|gerente|director)\b", norm_text):
                     return None
                 return "📝 Digitador & Back Office (Excel / SAP / Operaciones)"

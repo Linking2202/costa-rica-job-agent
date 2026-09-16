@@ -1,14 +1,15 @@
-# Configuración del Agente Rastreador de Empleos en Costa Rica
-# Ajustado para Luis Diego Agüero Quirós
+﻿# Configuración del Agente Rastreador de Empleos en Costa Rica
+# Ajustado para Luis Diego Agüero Quirós:
 # - Idiomas: EXCLUSIVAMENTE Español o Inglés.
 # - Puestos cubiertos:
-#   1. Soporte TI, Redes y Tickets (Junior, Mid y Senior)
+#   1. Soporte TI, Technical Support, Redes y Tickets (Junior, Mid y Senior)
 #   2. Análisis de Datos (Junior / Entry Level)
-#   3. Digitador, Data Entry y Back Office Administrativo (Excel, SAP, Inventario, Logística)
+#   3. Digitador, Data Entry, Data Management & Back Office Administrativo
+# - Sondeo directo a empresas multinacionales en Costa Rica (Equifax, DHL, Amazon, Intel, etc.)
 
 agent:
-  scan_interval_minutes: 15
-  max_alerts_per_cycle: 10
+  scan_interval_minutes: 30
+  max_alerts_per_cycle: 12
   country: "Costa Rica"
 
 # Idiomas descartados (solo español e inglés son válidos)
@@ -42,7 +43,7 @@ excluded_languages:
   - "korean"
   - "coreano"
 
-# Perfiles de interés acordes a tu CV
+# Perfiles de interés
 profiles:
   data_analytics:
     name: "Análisis de Datos Junior"
@@ -59,6 +60,8 @@ profiles:
       - "data reporting"
       - "reporting analyst"
       - "analista reporting"
+      - "data management"
+      - "master data"
     exclusions:
       - "senior"
       - "sr."
@@ -69,11 +72,13 @@ profiles:
       - "gerente"
 
   it_support:
-    name: "Soporte TI y Tickets (Onsite / Backoffice)"
+    name: "Soporte TI, Technical Support & Tickets (Onsite / Backoffice)"
     keywords:
       - "soporte tecnico"
       - "soporte tcnico"
       - "it support"
+      - "technical support"
+      - "tech support"
       - "desktop support"
       - "help desk"
       - "service desk"
@@ -85,18 +90,31 @@ profiles:
       - "active directory"
       - "jira"
       - "tickets"
+      - "ticketing"
+      - "incident"
+      - "incident management"
       - "mesa de ayuda"
       - "soporte en sitio"
       - "it technician"
+      - "it specialist"
+      - "it operations"
+      - "tier 1"
+      - "tier i"
+      - "level 1"
+      - "l1 support"
       - "noc technician"
       - "noc operator"
+      - "noc analyst"
       - "soporte informatico"
       - "soporte informtico"
       - "network technician"
       - "infrastructure support"
+      - "cloud support"
+      - "application support"
+      - "systems support"
 
   backoffice_digitacion:
-    name: "Digitador & Back Office (Excel / SAP / Operaciones)"
+    name: "Digitador, Data Entry & Back Office (Excel / SAP / Operaciones)"
     keywords:
       - "digitador"
       - "digitadora"
@@ -111,6 +129,7 @@ profiles:
       - "digitacion"
       - "ingreso de datos"
       - "captura de datos"
+      - "data management"
       - "back office"
       - "backoffice"
       - "asistente de datos"
@@ -147,15 +166,17 @@ exclusions:
 sources:
   linkedin:
     enabled: true
-    time_filter: "r604800"        # r604800 = últimos 7 días (para no perder ofertas de fin de semana)
+    time_filter: "r604800"
     queries:
-      - "Junior Data Analyst"
-      - "Data Analyst"
+      - "Technical Support"
       - "IT Support"
+      - "Service Desk Analyst"
       - "Desktop Support"
       - "Help Desk"
       - "Soporte Tecnico"
-      - "Service Desk"
+      - "Tier 1 Support"
+      - "Junior Data Analyst"
+      - "Data Analyst"
       - "Data Entry"
       - "Digitador"
       - "Back Office"
@@ -177,11 +198,12 @@ sources:
   talent:
     enabled: true
     queries:
+      - "technical support"
       - "soporte tecnico"
       - "data analyst"
       - "analista de datos"
       - "help desk"
-      - "power bi"
+      - "service desk"
       - "digitador"
       - "data entry"
       - "back office"
@@ -190,6 +212,7 @@ sources:
     enabled: true
     queries:
       - "soporte tecnico"
+      - "technical support"
       - "analista datos"
       - "help desk"
       - "it support"
@@ -212,3 +235,23 @@ sources:
       - "data"
       - "soporte"
       - "datos"
+
+  # Sondeo dedicado de empresas multinacionales en Costa Rica
+  companies:
+    enabled: true
+    time_filter: "r604800"
+    target_companies:
+      - "Equifax"
+      - "DHL"
+      - "Intel"
+      - "Amazon"
+      - "Align Technology"
+      - "Experian"
+      - "Foundever"
+      - "Tek Experts"
+      - "Concentrix"
+      - "Western Union"
+      - "Procter & Gamble"
+      - "Boston Scientific"
+      - "Microsoft"
+      - "Kyndryl"
