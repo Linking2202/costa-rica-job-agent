@@ -1,4 +1,4 @@
-﻿# Configuración del Agente Rastreador de Empleos en Costa Rica
+# Configuración del Agente Rastreador de Empleos en Costa Rica
 # Ajustado para Luis Diego Agüero Quirós:
 # - Idiomas: EXCLUSIVAMENTE Español o Inglés.
 # - Puestos cubiertos:
@@ -194,6 +194,9 @@ sources:
       - "digitador"
       - "data-entry"
       - "back-office"
+      - "el-rey"
+      - "almacenes-el-rey"
+      - "pozuelo"
 
   talent:
     enabled: true
@@ -236,7 +239,7 @@ sources:
       - "soporte"
       - "datos"
 
-  # Sondeo dedicado de empresas multinacionales en Costa Rica
+  # Sondeo dedicado de empresas multinacionales y líderes en Costa Rica
   companies:
     enabled: true
     time_filter: "r604800"
@@ -255,3 +258,14 @@ sources:
       - "Boston Scientific"
       - "Microsoft"
       - "Kyndryl"
+      - "Deloitte"
+      - "Emerson"
+      - "ExtremeTech"
+      - "Intelec"
+      - "Pozuelo"
+      - "Almacenes El Rey"
+      - "Citi"
+      - "Pfizer"
+      - "Scotiabank"
+      - "Kimberly-Clark"
+      - "Abbott"

@@ -1,4 +1,4 @@
-﻿import time
+import time
 import logging
 import urllib.parse
 import requests
@@ -123,6 +123,19 @@ class CompaniesScraper(BaseScraper):
                     comp_name = c_el.get_text(strip=True) if c_el else company
                     location = l_el.get_text(strip=True) if l_el else "Costa Rica"
                     clean_link = link_el.get("href", "").split("?")[0]
+
+                    # Validar que la vacante pertenezca realmente a la empresa sondeada
+                    norm_comp_query = company.lower()
+                    norm_comp_name = comp_name.lower()
+                    comp_tokens = [tok for tok in norm_comp_query.split() if len(tok) >= 3]
+                    is_company_match = (
+                        norm_comp_query in norm_comp_name
+                        or any(tok in norm_comp_name for tok in comp_tokens)
+                        or comp_name == "Confidencial"
+                    )
+
+                    if not is_company_match:
+                        continue
 
                     category = self.evaluate_job(title)
                     if category:
