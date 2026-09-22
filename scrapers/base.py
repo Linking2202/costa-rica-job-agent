@@ -1,4 +1,4 @@
-﻿import re
+import re
 import random
 import logging
 import unicodedata
@@ -104,7 +104,7 @@ class BaseScraper(ABC):
 
         # 5. Regla flexible de combinaciones de soporte técnico (Soporta español: soporte + tech, e inglés: support + tech)
         has_support_word = bool(re.search(r"\b(soporte|support)\b", norm_text))
-        has_tech_word = bool(re.search(r"\b(tecnico|technical|ti|it|computo|computacion|informatica|informatico|usuario|user|help\s*desk|service\s*desk|desktop|tier\s*1|l1|level\s*1|ticket|ticketing|incident|noc|network|redes)\b", norm_text))
+        has_tech_word = bool(re.search(r"\b(tecnico|technical|ti|it|computo|computacion|informatica|informatico|usuario|user|help\s*desk|service\s*desk|desktop|tier\s*1|l1|level\s*1|ticket|ticketing|incident|noc|network|redes|hardware|campo|field|infraestructura|infrastructure)\b", norm_text))
         if has_support_word and has_tech_word:
             is_senior = bool(re.search(r"\b(senior|sr\.?|sr\b)", norm_text))
             badge = " (Senior)" if is_senior else ""
