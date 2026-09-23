@@ -1,4 +1,4 @@
-﻿# 🤖 Agente Monitor de Empleos en Costa Rica (Alertas a WhatsApp)
+# 🤖 Agente Monitor de Empleos en Costa Rica (Alertas a WhatsApp)
 
 Agente inteligente desarrollado en Python para **Luis Diego Agüero Quirós**, diseñado para escanear de forma constante plataformas de empleo (**LinkedIn Costa Rica** y **Computrabajo Costa Rica**) y notificarte al instante a tu WhatsApp personal apenas se publique una vacante.
 
@@ -30,7 +30,7 @@ Usamos **CallMeBot**, que es 100% gratuito y no requiere crear cuentas complejas
 4. Abre el archivo .env en la carpeta del proyecto y coloca tu API Key:
    `env
    WHATSAPP_PROVIDER=callmebot
-   CALLMEBOT_PHONE=50662291039
+   CALLMEBOT_PHONE=506XXXXXXXX
    CALLMEBOT_API_KEY=tu_api_key_recibida
    `
 
