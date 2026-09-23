@@ -82,6 +82,16 @@ profiles:
       - "desktop support"
       - "help desk"
       - "service desk"
+      - "helpdesk"
+      - "servicedesk"
+      - "helpdesk technician"
+      - "help desk technician"
+      - "desktop technician"
+      - "desktop support technician"
+      - "technical support technician"
+      - "service desk technician"
+      - "helpdesk analyst"
+      - "service desk analyst"
       - "soporte ti"
       - "tecnico de soporte"
       - "tcnico de soporte"
@@ -189,8 +199,11 @@ exclusions:
 sources:
   linkedin:
     enabled: true
-    time_filter: "r604800"
+    time_filter: "r2592000"
     queries:
+      - "Helpdesk"
+      - "Helpdesk Technician"
+      - "Desktop Support Technician"
       - "Technical Support"
       - "IT Support"
       - "Service Desk Analyst"
@@ -273,7 +286,7 @@ sources:
   # Sondeo dedicado de empresas multinacionales y líderes en Costa Rica
   companies:
     enabled: true
-    time_filter: "r604800"
+    time_filter: "r2592000"
     target_companies:
       - "Equifax"
       - "DHL"
@@ -300,3 +313,6 @@ sources:
       - "Scotiabank"
       - "Kimberly-Clark"
       - "Abbott"
+      - "TD SYNNEX"
+      - "Bill Gosling Outsourcing"
+      - "Ultimate Jet Vacations"
