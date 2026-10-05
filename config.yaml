@@ -332,3 +332,17 @@ sources:
       - "Ultimate Jet Vacations"
       - "SONDA"
       - "ITS"
+
+  # Agencia Nacional de Empleo de Costa Rica (ane.cr - INA / MTSS)
+  ane:
+    enabled: true
+    max_pages: 2
+    categories:
+      - id: 26
+        name: "Tecnología de la información y las comunicaciones"
+      - id: 1
+        name: "Administración, mercadeo y apoyo administrativo"
+      - id: 9
+        name: "Electricidad/Electrónica/Telecomunicaciones"
+      - id: 28
+        name: "Transporte / Conductores / Almacenamiento"

@@ -115,8 +115,8 @@ class BaseScraper(ABC):
             return f"💻 Soporte TI & Tickets{badge} (Onsite / Backoffice)"
 
         # 5. Regla flexible de combinaciones de tecnología y soporte (Rol técnico + Dominio de TI)
-        has_tech_role = bool(re.search(r"\b(tecnico|tecnica|technician|soporte|support|help\s*desk|helpdesk|service\s*desk|servicedesk|mesa\s*de\s*ayuda|administrador|administrator|ingeniero|engineer|analista|analyst|especialista|specialist|operador|operator|asistente|auxiliar)\b", norm_text))
-        has_tech_domain = bool(re.search(r"\b(ti|it|sistemas|systems|redes|network|networking|telecomunicaciones|telecom|telecommunications|computo|computacion|informatica|informatico|hardware|servidores|server|servers|desktop|nivel\s*(1|i|2|ii|3|iii)|tier\s*(1|i|2|ii|3|iii)|level\s*(1|i|2|ii|3|iii)|l1|l2|l3|ticket|ticketing|incident|incidente|noc|soc|infraestructura|infrastructure|active\s*directory|jira|cloud|helpdesk|help\s*desk|technical)\b", norm_text))
+        has_tech_role = bool(re.search(r"\b(tecnico|tecnica|technician|soporte|soportista|support|help\s*desk|helpdesk|service\s*desk|servicedesk|mesa\s*de\s*ayuda|administrador|administrator|ingeniero|engineer|analista|analyst|especialista|specialist|operador|operator|asistente|auxiliar)\b", norm_text))
+        has_tech_domain = bool(re.search(r"\b(ti|it|sistemas|systems|redes|network|networking|telecomunicaciones|telecom|telecommunications|computo|computacion|informatica|informatico|hardware|servidores|server|servers|desktop|nivel\s*(1|i|2|ii|3|iii)|tier\s*(1|i|2|ii|3|iii)|level\s*(1|i|2|ii|3|iii)|l1|l2|l3|ticket|ticketing|incident|incidente|noc|soc|infraestructura|infrastructure|active\s*directory|jira|cloud|helpdesk|help\s*desk|technical|soporte|soportista)\b", norm_text))
         if has_tech_role and has_tech_domain:
             is_senior = bool(re.search(r"\b(senior|sr\.?|sr\b)", norm_text))
             badge = " (Senior)" if is_senior else ""
