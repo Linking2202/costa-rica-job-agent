@@ -21,6 +21,7 @@ class ANEScraper(BaseScraper):
     """
 
     BASE_URL = "https://www.ane.cr/Puesto"
+    AUTOCOMPLETE_URL = "https://www.ane.cr/Puesto/AutoCompleteEmpleos"
 
     def __init__(self, config: dict):
         super().__init__("ANE (ane.cr)", config)
@@ -29,13 +30,29 @@ class ANEScraper(BaseScraper):
             {"id": 26, "name": "TI y Telecomunicaciones"},
             {"id": 1, "name": "Administración y Apoyo Administrativo"},
             {"id": 9, "name": "Telecomunicaciones y Electrónica"},
-            {"id": 28, "name": "Almacenamiento e Inventario"}
+            {"id": 28, "name": "Almacenamiento e Inventario"},
+            {"id": 22, "name": "Servicios Financieros y Contables"}
         ])
         self.max_pages_per_cat = ane_cfg.get("max_pages", 2)
+        self.search_keywords = ane_cfg.get("search_keywords", [
+            "soporte", "tecnic", "telecom", "redes", "sistemas", "noc", "comput",
+            "ti", "it", "helpdesk", "service", "dato", "analis", "digitad",
+            "inventari", "factura", "asistente", "auxiliar", "operador", "compras",
+            "archivo", "oficina", "recepcion", "bodega", "back"
+        ])
 
     def fetch_jobs(self) -> List[Dict]:
         found_jobs = []
+        seen_keys = set()
+        seen_titles = set()
 
+        session = requests.Session()
+        session.headers.update(self.get_headers())
+        adapter = requests.adapters.HTTPAdapter(max_retries=3)
+        session.mount("https://", adapter)
+        session.mount("http://", adapter)
+
+        # 1. Exploración por categorías oficiales
         for cat in self.categories:
             cat_id = cat.get("id") if isinstance(cat, dict) else cat
             cat_name = cat.get("name", str(cat_id)) if isinstance(cat, dict) else str(cat_id)
@@ -47,7 +64,7 @@ class ANEScraper(BaseScraper):
                 }
                 url = f"{self.BASE_URL}?{urllib.parse.urlencode(params)}"
                 try:
-                    resp = requests.get(url, headers=self.get_headers(), verify=False, timeout=12)
+                    resp = session.get(url, verify=False, timeout=15)
                     if resp.status_code != 200:
                         continue
 
@@ -70,21 +87,95 @@ class ANEScraper(BaseScraper):
                         published_time = dt_el.get_text(strip=True) if dt_el else "Reciente"
                         location = loc_el.get_text(strip=True) if loc_el else "Costa Rica"
 
+                        key = (title.lower(), company.lower(), location.lower())
+                        if key in seen_keys:
+                            continue
+
+                        seen_titles.add(title.strip().lower())
                         category = self.evaluate_job(title)
                         if category:
+                            seen_keys.add(key)
                             found_jobs.append({
                                 "source": "ANE Costa Rica (ane.cr)",
                                 "title": title,
                                 "company": company,
                                 "location": location,
-                                "url": f"{self.BASE_URL}?Cat={cat_id}",
+                                "url": f"{self.BASE_URL}?Empleos={urllib.parse.quote(title)}",
                                 "published_time": published_time,
                                 "category": category
                             })
 
-                    time.sleep(1.2)
+                    time.sleep(1.0)
                 except Exception as e:
                     logger.error(f"[ANE] Error consultando categoría '{cat_name}' (Pág {page}): {e}")
+
+        # 2. Sondeo activo por palabras clave vía AutoComplete de ANE
+        discovered_titles = set()
+        for kw in self.search_keywords:
+            try:
+                resp = session.post(
+                    self.AUTOCOMPLETE_URL,
+                    json={"KeyWord": kw},
+                    verify=False,
+                    timeout=10
+                )
+                if resp.status_code == 200:
+                    for item in resp.json():
+                        desc = item.get("DESCRIPCION", "").strip()
+                        if desc and desc.lower() not in seen_titles:
+                            discovered_titles.add(desc)
+                time.sleep(0.3)
+            except Exception as e:
+                logger.debug(f"[ANE] Error en AutoComplete para '{kw}': {e}")
+
+        # 3. Extraer vacantes directas para títulos descubiertos no presentes en categorías
+        for title in discovered_titles:
+            query_category = self.evaluate_job(title)
+            if not query_category:
+                continue
+
+            query_url = f"{self.BASE_URL}?Empleos={urllib.parse.quote(title)}"
+            try:
+                resp = session.get(query_url, verify=False, timeout=12)
+                if resp.status_code != 200:
+                    continue
+
+                soup = BeautifulSoup(resp.text, "html.parser")
+                listings = soup.find_all("div", class_="job-listing")
+                for item in listings:
+                    t_el = item.find("h3", class_="job-listing-title")
+                    c_el = item.find("h4", class_="job-listing-company")
+                    dt_el = item.find("small")
+                    loc_el = item.find("li")
+
+                    t_name = t_el.get_text(strip=True) if t_el else title
+                    company = c_el.get_text(strip=True) if c_el else "Confidencial"
+                    published_time = dt_el.get_text(strip=True) if dt_el else "Reciente"
+                    location = loc_el.get_text(strip=True) if loc_el else "Costa Rica"
+
+                    key = (t_name.lower(), company.lower(), location.lower())
+                    if key in seen_keys:
+                        continue
+
+                    # Validar individualmente el título de la tarjeta
+                    card_category = self.evaluate_job(t_name)
+                    if not card_category:
+                        continue
+
+                    seen_keys.add(key)
+                    found_jobs.append({
+                        "source": "ANE Costa Rica (ane.cr)",
+                        "title": t_name,
+                        "company": company,
+                        "location": location,
+                        "url": query_url,
+                        "published_time": published_time,
+                        "category": card_category
+                    })
+
+                time.sleep(1.0)
+            except Exception as e:
+                logger.error(f"[ANE] Error extrayendo vacante '{title}': {e}")
 
         logger.info(f"[ANE] Encontradas {len(found_jobs)} ofertas coincidentes con tu perfil.")
         return found_jobs
