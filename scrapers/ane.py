@@ -30,8 +30,7 @@ class ANEScraper(BaseScraper):
             {"id": 26, "name": "TI y Telecomunicaciones"},
             {"id": 1, "name": "Administración y Apoyo Administrativo"},
             {"id": 9, "name": "Telecomunicaciones y Electrónica"},
-            {"id": 28, "name": "Almacenamiento e Inventario"},
-            {"id": 22, "name": "Servicios Financieros y Contables"}
+            {"id": 28, "name": "Almacenamiento e Inventario"}
         ])
         self.max_pages_per_cat = ane_cfg.get("max_pages", 2)
         self.search_keywords = ane_cfg.get("search_keywords", [

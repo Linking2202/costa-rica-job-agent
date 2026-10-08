@@ -60,8 +60,6 @@ profiles:
       - "data reporting"
       - "reporting analyst"
       - "analista reporting"
-      - "data management"
-      - "master data"
     exclusions:
       - "senior"
       - "sr."
@@ -70,6 +68,17 @@ profiles:
       - "principal"
       - "director"
       - "gerente"
+      - "master data"
+      - "data science"
+      - "ciencias de datos"
+      - "ciencia de datos"
+      - "cientifico de datos"
+      - "data scientist"
+      - "data engineer"
+      - "ingeniero de datos"
+      - "dba"
+      - "database administrator"
+      - "big data"
 
   it_support:
     name: "Soporte TI, Technical Support & Tickets (Onsite / Backoffice)"
@@ -167,7 +176,6 @@ profiles:
       - "digitacion"
       - "ingreso de datos"
       - "captura de datos"
-      - "data management"
       - "back office"
       - "backoffice"
       - "asistente de datos"
@@ -192,10 +200,6 @@ profiles:
       - "recepcionista"
       - "recepcionista bilingue"
       - "recepcionista bilingüe"
-      - "asistente contable"
-      - "auxiliar contable"
-      - "accounting clerk"
-      - "asistente cxc"
       - "asistente de compras"
       - "auxiliar de compras"
       - "auxiliar de oficina para compras"
@@ -219,7 +223,7 @@ profiles:
       - "auxiliar de logistica"
       - "auxiliar aduanal"
 
-# Palabras que descartan la oferta globalmente (No Call Center de llamadas)
+# Palabras que descartan la oferta globalmente
 exclusions:
   - "call center"
   - "agente de llamadas"
@@ -232,6 +236,37 @@ exclusions:
   - "cold calling"
   - "agente bilingue llamadas"
   - "cobro telefonico"
+  - "contable"
+  - "contabilidad"
+  - "contador"
+  - "contadora"
+  - "credito y cobro"
+  - "credito & cobro"
+  - "cobro"
+  - "cobros"
+  - "cxc"
+  - "cxp"
+  - "cuentas por cobrar"
+  - "cuentas por pagar"
+  - "accounting"
+  - "accountant"
+  - "bookkeeper"
+  - "bookkeeping"
+  - "auditoria"
+  - "auditor"
+  - "auditora"
+  - "tesoreria"
+  - "master data"
+  - "data science"
+  - "ciencias de datos"
+  - "ciencia de datos"
+  - "cientifico de datos"
+  - "data scientist"
+  - "data engineer"
+  - "ingeniero de datos"
+  - "dba"
+  - "database administrator"
+  - "big data"
 
 # Plataformas de empleo activas en Costa Rica
 sources:
@@ -370,8 +405,6 @@ sources:
         name: "Electricidad/Electrónica/Telecomunicaciones"
       - id: 28
         name: "Transporte / Conductores / Almacenamiento"
-      - id: 22
-        name: "Servicios financieros y contables"
     search_keywords:
       - "soporte"
       - "tecnic"

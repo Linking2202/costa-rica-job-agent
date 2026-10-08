@@ -88,10 +88,21 @@ class BaseScraper(ABC):
         if re.search(r"\b(jefe\b|jefatura|gerente|director\b|directora|head\s+of)\b", norm_text):
             return None
 
-        # 3. Perfil Datos (Solo Junior / Entry - descarta Senior en Datos/BD)
+        # 2.4 Exclusión estricta de contabilidad, crédito y cobro, cuentas por cobrar/pagar
+        if re.search(r"\b(contable|contabilidad|contador[a]?|credito\s+(y|&)\s+cobro|cobro|cobros|cxc|cxp|cuentas\s+por\s+(cobrar|pagar)|accounting|accountant|bookkeeper|bookkeeping|auditoria|auditor[a]?|tesoreria)\b", norm_text):
+            return None
+
+        # 2.5 Exclusión de ciencia de datos avanzada, bases de datos avanzadas y master data
+        if re.search(r"\b(master\s+data|data\s+science|ciencias?\s+de\s+datos|cientific[oa]\s+de\s+datos|data\s+scientist|data\s+engineer|ingenier[oa]\s+de\s+datos|dba\b|database\s+administrator|administrador(a)?\s+de\s+bases?\s+de\s+datos|data\s+architect|arquitect[oa]\s+de\s+datos|big\s+data)\b", norm_text):
+            return None
+
+        # 3. Perfil Datos (Solo Junior / Entry o nivel no especificado - descarta Senior, Data Science y Master Data)
         data_cfg = self.config.get("profiles", {}).get("data_analytics", {})
         data_keywords = data_cfg.get("keywords", [])
-        data_exclusions = data_cfg.get("exclusions", ["senior", "sr.", "sr ", "lead", "principal"])
+        data_exclusions = data_cfg.get("exclusions", [
+            "senior", "sr.", "sr ", "lead", "principal", "director", "gerente",
+            "master data", "data science", "ciencias de datos", "cientifico de datos", "dba", "data engineer"
+        ])
 
         for kw in data_keywords:
             norm_kw = strip_accents(kw)
@@ -146,8 +157,8 @@ class BaseScraper(ABC):
         if re.search(r"\b(facturador|facturadora|facturacion|asistente\s+de\s+facturacion|auxiliar\s+de\s+facturacion|chequeador\s*,\s*facturador|asistente\s+de\s+compras|auxiliar\s+de\s+compras|auxiliar\s+de\s+oficina\s+para\s+compras|compras\s+y\s+proveeduria)\b", norm_text):
             return "🧾 Facturación & Asistente de Compras"
 
-        # 8. Perfil Auxiliar Administrativo, Oficina & Operaciones
-        if re.search(r"\b(asistente\s+administrativo|asistente\s+administrativa|auxiliar\s+administrativo|auxiliar\s+administrativa|asistente\s+de\s+oficina|auxiliar\s+de\s+oficina|oficinista|asistente\s+de\s+operaciones|auxiliar\s+de\s+operaciones|back\s*office|backoffice|gestor\s+documental|gestora\s+documental|auxiliar\s+de\s+archivo|recepcionista|recepcionista\s+bilingue|recepcionista\s+bilingüe|asistente\s+de\s+licitaciones|asistente\s+cxc|asistente\s+contable|auxiliar\s+contable|asistente\s*/?\s*analista\s+contable|accounting\s+clerk)\b", norm_text):
+        # 8. Perfil Auxiliar Administrativo, Oficina & Operaciones (Sin contabilidad / sin crédito y cobro)
+        if re.search(r"\b(asistente\s+administrativo|asistente\s+administrativa|auxiliar\s+administrativo|auxiliar\s+administrativa|asistente\s+de\s+oficina|auxiliar\s+de\s+oficina|oficinista|asistente\s+de\s+operaciones|auxiliar\s+de\s+operaciones|back\s*office|backoffice|gestor\s+documental|gestora\s+documental|auxiliar\s+de\s+archivo|recepcionista|recepcionista\s+bilingue|recepcionista\s+bilingüe|asistente\s+de\s+licitaciones)\b", norm_text):
             return "📋 Auxiliar Administrativo, Oficina & Operaciones"
 
         # 9. Coincidencias de configuración de fallback
