@@ -125,8 +125,8 @@ class BaseScraper(ABC):
                 badge = " (Senior)" if is_senior else ""
                 return f"💻 Soporte TI & Telecomunicaciones{badge}"
 
-        # 4.1 Coincidencia directa de Help Desk / Mesa de Ayuda / NOC / Telecom
-        if re.search(r"\b(help\s*desk|helpdesk|service\s*desk|servicedesk|mesa\s*de\s*ayuda|cableado\s+estructurado|noc\s+(technician|operator|analyst)|soc\s+analyst)\b", norm_text):
+        # 4.1 Coincidencia directa de Help Desk / Mesa de Ayuda / NOC / Telecom / CCTV / Monitoreo
+        if re.search(r"\b(help\s*desk|helpdesk|service\s*desk|servicedesk|mesa\s*de\s*ayuda|cableado\s+estructurado|noc\s+(technician|operator|analyst)|soc\s+analyst|cctv|monitoreo\s+de\s+camaras|agente\s+de\s+monitoreo|operador\s+de\s+monitoreo|oficial\s+de\s+monitoreo|centro\s+de\s+control)\b", norm_text):
             is_senior = bool(re.search(r"\b(senior|sr\.?|sr\b)", norm_text))
             badge = " (Senior)" if is_senior else ""
             return f"💻 Soporte TI & Telecomunicaciones{badge}"
@@ -139,26 +139,26 @@ class BaseScraper(ABC):
 
         # 4.3 Regla flexible de tecnología y soporte (Rol técnico + Dominio de TI)
         has_tech_role = bool(re.search(r"\b(tecnico|tecnica|technician|soporte|soportista|support|administrador|administrator|ingeniero|engineer|analista|analyst|especialista|specialist|operador|operator|asistente|auxiliar)\b", norm_text))
-        has_tech_domain = bool(re.search(r"\b(ti|it|sistemas|systems|redes|network|networking|telecomunicaciones|telecom|telecommunications|computo|computacion|informatica|informatico|hardware|servidores|server|servers|desktop|nivel\s*(1|i|2|ii|3|iii)|tier\s*(1|i|2|ii|3|iii)|level\s*(1|i|2|ii|3|iii)|l1|l2|l3|ticket|ticketing|incident|incidente|noc|soc|infraestructura|infrastructure|active\s*directory|jira|cloud|technical|soporte|soportista)\b", norm_text))
+        has_tech_domain = bool(re.search(r"\b(ti|it|sistemas|systems|redes|network|networking|telecomunicaciones|telecom|telecommunications|computo|computacion|informatica|informatico|hardware|servidores|server|servers|desktop|nivel\s*(1|i|2|ii|3|iii)|tier\s*(1|i|2|ii|3|iii)|level\s*(1|i|2|ii|3|iii)|l1|l2|l3|ticket|ticketing|incident|incidente|noc|soc|cctv|monitoreo|infraestructura|infrastructure|active\s*directory|jira|cloud|technical|soporte|soportista)\b", norm_text))
         if has_tech_role and has_tech_domain and "soporte de eventos" not in norm_text:
             is_senior = bool(re.search(r"\b(senior|sr\.?|sr\b)", norm_text))
             badge = " (Senior)" if is_senior else ""
             return f"💻 Soporte TI & Telecomunicaciones{badge}"
 
-        # 5. Perfil Digitación & Entrada de Datos
-        if re.search(r"\b(digitador|digitadora|data\s*entry|transcriptor|transcriptora|captura\s+de\s+datos|ingreso\s+de\s+datos|digitacion|digitalizador|digitalizadora|operador\s+de\s+datos|operadora\s+de\s+datos|digitador\s+tica)\b", norm_text):
+        # 5. Perfil Digitación, Encuestas & Entrada de Datos
+        if re.search(r"\b(digitador|digitadora|data\s*entry|transcriptor|transcriptora|captura\s+de\s+datos|ingreso\s+de\s+datos|digitacion|digitalizador|digitalizadora|operador\s+de\s+datos|operadora\s+de\s+datos|digitador\s+tica|encuestador|encuestadora|recolector[a]?\s+de\s+datos)\b", norm_text):
             return "📝 Digitación & Entrada de Datos"
 
-        # 6. Perfil Control de Inventarios, Bodega & Logística Accesible
-        if re.search(r"\b(control\s+de\s+inventario|control\s+de\s+inventarios|auxiliar\s+de\s+inventarios|auxiliar\s+de\s+inventario|bodeguero\s+de\s+inventarios|bodega\s+e\s+inventarios|bodeguero\s*\(?a\)?\s+de\s+inventarios|asistente\s+de\s+inventarios|auxiliar\s+de\s+bodega|asistente\s+de\s+bodega|almacenista|almacen\s+e\s+inventarios|alisto-bodega|alistador\s+de\s+bodega|auxiliar\s+logistico|asistente\s+logistica|despacho\s+de\s+contenedores|auxiliar\s+aduanal)\b", norm_text):
+        # 6. Perfil Control de Inventarios, Bodega, Alisto & Logística
+        if re.search(r"\b(control\s+de\s+inventario|control\s+de\s+inventarios|auxiliar\s+de\s+inventarios|auxiliar\s+de\s+inventario|bodeguero\s+de\s+inventarios|bodega\s+e\s+inventarios|bodeguero\s*\(?a\)?\s+de\s+inventarios|asistente\s+de\s+inventarios|auxiliar\s+de\s+bodega|asistente\s+de\s+bodega|almacenista|almacen\s+e\s+inventarios|alisto-bodega|alistador\s+de\s+bodega|auxiliar\s+logistico|asistente\s+logistica|despacho\s+de\s+contenedores|auxiliar\s+aduanal|alisto\s+pedidos|personal\s+alisto\s+pedidos|picking|packing|auxiliar\s+de\s+almacen|operari[oa]\s+de\s+empaque|empaque)\b", norm_text):
             return "📦 Control de Inventarios & Bodega"
 
-        # 7. Perfil Facturación & Asistente de Compras
-        if re.search(r"\b(facturador|facturadora|facturacion|asistente\s+de\s+facturacion|auxiliar\s+de\s+facturacion|chequeador\s*,\s*facturador|asistente\s+de\s+compras|auxiliar\s+de\s+compras|auxiliar\s+de\s+oficina\s+para\s+compras|compras\s+y\s+proveeduria)\b", norm_text):
+        # 7. Perfil Facturación, Asistente de Compras & Cajero
+        if re.search(r"\b(facturador|facturadora|facturacion|asistente\s+de\s+facturacion|auxiliar\s+de\s+facturacion|chequeador\s*,\s*facturador|asistente\s+de\s+compras|auxiliar\s+de\s+compras|auxiliar\s+de\s+oficina\s+para\s+compras|compras\s+y\s+proveeduria|cajer[oa]\b|cajero\s*\(?a\)?\b)\b", norm_text):
             return "🧾 Facturación & Asistente de Compras"
 
-        # 8. Perfil Auxiliar Administrativo, Oficina & Operaciones (Sin contabilidad / sin crédito y cobro)
-        if re.search(r"\b(asistente\s+administrativo|asistente\s+administrativa|auxiliar\s+administrativo|auxiliar\s+administrativa|asistente\s+de\s+oficina|auxiliar\s+de\s+oficina|oficinista|asistente\s+de\s+operaciones|auxiliar\s+de\s+operaciones|back\s*office|backoffice|gestor\s+documental|gestora\s+documental|auxiliar\s+de\s+archivo|recepcionista|recepcionista\s+bilingue|recepcionista\s+bilingüe|asistente\s+de\s+licitaciones)\b", norm_text):
+        # 8. Perfil Auxiliar Administrativo, Oficina & Operaciones (Servicio presencial, calidad, archivo, oficina)
+        if re.search(r"\b(asistente\s+administrativo|asistente\s+administrativa|auxiliar\s+administrativo|auxiliar\s+administrativa|asistente\s+de\s+oficina|auxiliar\s+de\s+oficina|oficinista|asistente\s+de\s+operaciones|auxiliar\s+de\s+operaciones|back\s*office|backoffice|gestor\s+documental|gestora\s+documental|auxiliar\s+de\s+archivo|recepcionista|recepcionista\s+bilingue|recepcionista\s+bilingüe|asistente\s+de\s+licitaciones|asesor(\s*\(?[a|o]\)?)?\s+de\s+servicio\s+al\s+cliente|servicio\s+al\s+cliente\s+presencial|inspector[a]?\s+de\s+calidad|asistente\s+de\s+calidad|mensajero)\b", norm_text):
             return "📋 Auxiliar Administrativo, Oficina & Operaciones"
 
         # 9. Coincidencias de configuración de fallback

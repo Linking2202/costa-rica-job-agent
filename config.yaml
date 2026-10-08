@@ -159,6 +159,11 @@ profiles:
       - "tcnico en telecomunicaciones"
       - "ingeniero de redes"
       - "network engineer"
+      - "cctv"
+      - "monitoreo"
+      - "operador de monitoreo"
+      - "oficial de monitoreo"
+      - "agente de monitoreo"
 
   backoffice_digitacion:
     name: "Digitador, Data Entry & Back Office (Excel / SAP / Operaciones)"
@@ -209,6 +214,9 @@ profiles:
       - "facturadora"
       - "asistente de facturacion"
       - "auxiliar de facturacion"
+      - "cajero"
+      - "cajera"
+      - "cajero operativo"
       - "inventario"
       - "inventarios"
       - "control de inventario"
@@ -220,8 +228,20 @@ profiles:
       - "auxiliar de bodega"
       - "asistente de bodega"
       - "almacenista"
+      - "auxiliar de almacen"
+      - "alisto de pedidos"
+      - "picking"
+      - "packing"
+      - "operario de empaque"
       - "auxiliar de logistica"
       - "auxiliar aduanal"
+      - "encuestador"
+      - "encuestadora"
+      - "inspector de calidad"
+      - "asistente de calidad"
+      - "mensajero"
+      - "servicio al cliente presencial"
+      - "asesor de servicio al cliente"
 
 # Palabras que descartan la oferta globalmente
 exclusions:
@@ -395,7 +415,7 @@ sources:
   # Agencia Nacional de Empleo de Costa Rica (ane.cr - INA / MTSS)
   ane:
     enabled: true
-    max_pages: 2
+    max_pages: 3
     categories:
       - id: 26
         name: "Tecnología de la información y las comunicaciones"
@@ -405,6 +425,12 @@ sources:
         name: "Electricidad/Electrónica/Telecomunicaciones"
       - id: 28
         name: "Transporte / Conductores / Almacenamiento"
+      - id: 19
+        name: "Seguridad y Monitoreo CCTV"
+      - id: 25
+        name: "Supervisores, Operarios y Alisto"
+      - id: 30
+        name: "Comercio, Cajas y Servicio al Cliente"
     search_keywords:
       - "soporte"
       - "tecnic"
@@ -431,3 +457,16 @@ sources:
       - "recepcion"
       - "bodega"
       - "back"
+      - "monitoreo"
+      - "cctv"
+      - "cajero"
+      - "caja"
+      - "alisto"
+      - "picking"
+      - "packing"
+      - "empaque"
+      - "inspector"
+      - "calidad"
+      - "encuestador"
+      - "almacen"
+      - "mensajero"

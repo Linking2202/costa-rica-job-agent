@@ -30,14 +30,19 @@ class ANEScraper(BaseScraper):
             {"id": 26, "name": "TI y Telecomunicaciones"},
             {"id": 1, "name": "Administración y Apoyo Administrativo"},
             {"id": 9, "name": "Telecomunicaciones y Electrónica"},
-            {"id": 28, "name": "Almacenamiento e Inventario"}
+            {"id": 28, "name": "Almacenamiento e Inventario"},
+            {"id": 19, "name": "Seguridad y Monitoreo CCTV"},
+            {"id": 25, "name": "Supervisores, Operarios y Alisto"},
+            {"id": 30, "name": "Comercio, Cajas y Servicio al Cliente"}
         ])
-        self.max_pages_per_cat = ane_cfg.get("max_pages", 2)
+        self.max_pages_per_cat = ane_cfg.get("max_pages", 3)
         self.search_keywords = ane_cfg.get("search_keywords", [
             "soporte", "tecnic", "telecom", "redes", "sistemas", "noc", "comput",
             "ti", "it", "helpdesk", "service", "dato", "analis", "digitad",
             "inventari", "factura", "asistente", "auxiliar", "operador", "compras",
-            "archivo", "oficina", "recepcion", "bodega", "back"
+            "archivo", "oficina", "recepcion", "bodega", "back",
+            "monitoreo", "cctv", "cajero", "caja", "alisto", "picking", "packing",
+            "empaque", "inspector", "calidad", "encuestador", "almacen", "mensajero"
         ])
 
     def fetch_jobs(self) -> List[Dict]:
