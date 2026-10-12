@@ -6,6 +6,7 @@ from scrapers.unmejorempleo import UnMejorEmpleoScraper
 from scrapers.getonbrd import GetOnBrdScraper
 from scrapers.companies import CompaniesScraper
 from scrapers.ane import ANEScraper
+from scrapers.workday import WorkdayScraper
 
 def get_active_scrapers(config: dict):
     scrapers = []
@@ -34,5 +35,8 @@ def get_active_scrapers(config: dict):
 
     if sources_cfg.get("ane", {}).get("enabled", True):
         scrapers.append(ANEScraper(config))
+
+    if sources_cfg.get("workday", {}).get("enabled", True):
+        scrapers.append(WorkdayScraper(config))
 
     return scrapers

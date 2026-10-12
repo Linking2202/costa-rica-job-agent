@@ -470,3 +470,35 @@ sources:
       - "encuestador"
       - "almacen"
       - "mensajero"
+
+  # Portales corporativos Workday en Costa Rica (*.myworkdayjobs.com)
+  workday:
+    enabled: true
+    limit_per_company: 20
+    queries:
+      - "Costa Rica"
+    companies:
+      - name: "Abbott"
+        api_url: "https://abbott.wd5.myworkdayjobs.com/wday/cxs/abbott/abbottcareers/jobs"
+        base_url: "https://abbott.wd5.myworkdayjobs.com/en-US/abbottcareers"
+      - name: "Procter & Gamble (P&G)"
+        api_url: "https://pg.wd5.myworkdayjobs.com/wday/cxs/pg/1000/jobs"
+        base_url: "https://pg.wd5.myworkdayjobs.com/en-US/1000"
+      - name: "Pfizer"
+        api_url: "https://pfizer.wd1.myworkdayjobs.com/wday/cxs/pfizer/PfizerCareers/jobs"
+        base_url: "https://pfizer.wd1.myworkdayjobs.com/en-US/PfizerCareers"
+      - name: "Stryker"
+        api_url: "https://stryker.wd1.myworkdayjobs.com/wday/cxs/stryker/StrykerCareers/jobs"
+        base_url: "https://stryker.wd1.myworkdayjobs.com/en-US/StrykerCareers"
+      - name: "JLL"
+        api_url: "https://jll.wd1.myworkdayjobs.com/wday/cxs/jll/jllcareers/jobs"
+        base_url: "https://jll.wd1.myworkdayjobs.com/en-US/jllcareers"
+      - name: "TransUnion"
+        api_url: "https://transunion.wd5.myworkdayjobs.com/wday/cxs/transunion/TransUnion/jobs"
+        base_url: "https://transunion.wd5.myworkdayjobs.com/en-US/TransUnion"
+      - name: "Sysco"
+        api_url: "https://sysco.wd5.myworkdayjobs.com/wday/cxs/sysco/SyscoCareers/jobs"
+        base_url: "https://sysco.wd5.myworkdayjobs.com/en-US/SyscoCareers"
+      - name: "Workday"
+        api_url: "https://workday.wd5.myworkdayjobs.com/wday/cxs/workday/Workday/jobs"
+        base_url: "https://workday.wd5.myworkdayjobs.com/en-US/Workday"
