@@ -137,9 +137,9 @@ class BaseScraper(ABC):
             badge = " (Senior)" if is_senior else ""
             return f"💻 Soporte TI & Telecomunicaciones{badge}"
 
-        # 4.3 Regla flexible de tecnología y soporte (Rol técnico + Dominio de TI)
-        has_tech_role = bool(re.search(r"\b(tecnico|tecnica|technician|soporte|soportista|support|administrador|administrator|ingeniero|engineer|analista|analyst|especialista|specialist|operador|operator|asistente|auxiliar)\b", norm_text))
-        has_tech_domain = bool(re.search(r"\b(ti|it|sistemas|systems|redes|network|networking|telecomunicaciones|telecom|telecommunications|computo|computacion|informatica|informatico|hardware|servidores|server|servers|desktop|nivel\s*(1|i|2|ii|3|iii)|tier\s*(1|i|2|ii|3|iii)|level\s*(1|i|2|ii|3|iii)|l1|l2|l3|ticket|ticketing|incident|incidente|noc|soc|cctv|monitoreo|infraestructura|infrastructure|active\s*directory|jira|cloud|technical|soporte|soportista)\b", norm_text))
+        # 4.3 Regla flexible de tecnología y soporte (Rol técnico + Dominio de TI / TE)
+        has_tech_role = bool(re.search(r"\b(tecnico|tecnica|technician|soporte|soportista|support|administrador|administrator|ingeniero|engineer|analista|analyst|especialista|specialist|operador|operator|asistente|auxiliar|encargado|coordinador|agent|agente)\b", norm_text))
+        has_tech_domain = bool(re.search(r"\b(ti|it|te\b|te\s*[1-3]|te\s*(i{1,3})|sistemas|systems|redes|network|networking|telecomunicaciones|telecom|telecommunications|computo|computacion|informatica|informatico|hardware|software|servidores|server|servers|desktop|pc|laptop|workstation|nivel\s*(1|i|2|ii|3|iii)|tier\s*(1|i|2|ii|3|iii)|level\s*(1|i|2|ii|3|iii)|l1|l2|l3|ticket|ticketing|incident|incidente|noc|soc|cctv|monitoreo|infraestructura|infrastructure|active\s*directory|jira|cloud|technical|soporte|soportista|mesa\s*de\s*ayuda|help\s*desk|service\s*desk)\b", norm_text))
         if has_tech_role and has_tech_domain and "soporte de eventos" not in norm_text:
             is_senior = bool(re.search(r"\b(senior|sr\.?|sr\b)", norm_text))
             badge = " (Senior)" if is_senior else ""
